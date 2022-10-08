@@ -1,5 +1,6 @@
 __author__ = 'marble_xu'
 
+import datetime
 import pygame as pg
 from .. import tool
 from .. import constants as c
@@ -174,6 +175,7 @@ class Zombie(pg.sprite.Sprite):
     def setDamage(self, damage, ice=False):
         self.health -= damage
         self.hit_timer = self.current_time
+        # print(datetime.datetime.now(), 'Zombies setDamage', self.name, hash(self), self.health, self.hit_timer, sep=',')
         if ice:
             self.setIceSlow()
     
@@ -273,6 +275,7 @@ class NormalZombie(Zombie):
         self.frames = self.walk_frames
 
 class ConeHeadZombie(Zombie):
+    """ 路障僵尸 """
     def __init__(self, x, y, head_group):
         Zombie.__init__(self, x, y, c.CONEHEAD_ZOMBIE, c.CONEHEAD_HEALTH, head_group)
         self.helmet = True
@@ -309,6 +312,7 @@ class ConeHeadZombie(Zombie):
         self.frames = self.helmet_walk_frames
 
 class BucketHeadZombie(Zombie):
+    """ 铁桶僵尸 """
     def __init__(self, x, y, head_group):
         Zombie.__init__(self, x, y, c.BUCKETHEAD_ZOMBIE, c.BUCKETHEAD_HEALTH, head_group)
         self.helmet = True
@@ -345,6 +349,7 @@ class BucketHeadZombie(Zombie):
         self.frames = self.helmet_walk_frames
 
 class FlagZombie(Zombie):
+    """ 旗子僵尸 """
     def __init__(self, x, y, head_group):
         Zombie.__init__(self, x, y, c.FLAG_ZOMBIE, c.FLAG_HEALTH, head_group)
     
@@ -374,6 +379,7 @@ class FlagZombie(Zombie):
         self.frames = self.walk_frames
 
 class NewspaperZombie(Zombie):
+    """ 读报僵尸 """
     def __init__(self, x, y, head_group):
         Zombie.__init__(self, x, y, c.NEWSPAPER_ZOMBIE, c.NEWSPAPER_HEALTH, head_group)
         self.helmet = True

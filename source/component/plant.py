@@ -1,5 +1,6 @@
 __author__ = 'marble_xu'
 
+import datetime
 import random
 import pygame as pg
 from .. import tool
@@ -36,6 +37,7 @@ class Car(pg.sprite.Sprite):
         surface.blit(self.image, self.rect)
 
 class Bullet(pg.sprite.Sprite):
+    """ 子弹 """
     def __init__(self, x, start_y, dest_y, name, damage, ice):
         pg.sprite.Sprite.__init__(self)
 
@@ -212,6 +214,7 @@ class Plant(pg.sprite.Sprite):
     def setDamage(self, damage, zombie):
         self.health -= damage
         self.hit_timer = self.current_time
+        # print(datetime.datetime.now(), 'Plants setDamage', self.name, hash(self), self.health, self.hit_timer, sep=',')
         if self.health == 0:
             self.kill_zombie = zombie
 
@@ -386,6 +389,7 @@ class CherryBomb(Plant):
             self.image = self.frames[self.frame_index]
 
 class Chomper(Plant):
+    """ 大嘴花 """
     def __init__(self, x, y):
         Plant.__init__(self, x, y, c.CHOMPER, c.PLANT_HEALTH, None)
         self.animate_interval = 250
@@ -449,6 +453,7 @@ class Chomper(Plant):
             self.setIdle()
 
 class PuffShroom(Plant):
+    """ 小喷菇 """
     def __init__(self, x, y, bullet_group):
         Plant.__init__(self, x, y, c.PUFFSHROOM, c.PLANT_HEALTH, bullet_group)
         self.can_sleep = True
@@ -482,6 +487,7 @@ class PuffShroom(Plant):
         return False
 
 class PotatoMine(Plant):
+    """ 土豆地雷 """
     def __init__(self, x, y):
         Plant.__init__(self, x, y, c.POTATOMINE, c.PLANT_HEALTH, None)
         self.animate_interval = 300
@@ -489,7 +495,8 @@ class PotatoMine(Plant):
         self.init_timer = 0
         self.bomb_timer = 0
         self.explode_y_range = 0
-        self.explode_x_range = c.GRID_X_SIZE//3 * 2
+        self.explode_x_range = c.GRID_X_SIZE // 8 * 7
+        # print(datetime.datetime.now(), 'init', self.name, hash(self), self.health, self.hit_timer, sep=',')
 
     def loadImages(self, name, scale):
         self.init_frames = []
@@ -530,6 +537,7 @@ class PotatoMine(Plant):
             self.health = 0
 
 class Squash(Plant):
+    """ 窝瓜 """
     def __init__(self, x, y):
         Plant.__init__(self, x, y, c.SQUASH, c.PLANT_HEALTH, None)
         self.orig_pos = (x, y)
@@ -584,6 +592,7 @@ class Squash(Plant):
         return self.orig_pos
 
 class Spikeweed(Plant):
+    """ 地刺 """
     def __init__(self, x, y):
         Plant.__init__(self, x, y, c.SPIKEWEED, c.PLANT_HEALTH, None)
         self.animate_interval = 200
@@ -616,6 +625,7 @@ class Spikeweed(Plant):
                     zombie.setDamage(1, False)
 
 class Jalapeno(Plant):
+    """ 火爆辣椒 """
     def __init__(self, x, y):
         Plant.__init__(self, x, y, c.JALAPENO, c.PLANT_HEALTH, None)
         self.orig_pos = (x, y)
@@ -658,6 +668,7 @@ class Jalapeno(Plant):
         return self.orig_pos
 
 class ScaredyShroom(Plant):
+    """ 胆小菇 """
     def __init__(self, x, y, bullet_group):
         Plant.__init__(self, x, y, c.SCAREDYSHROOM, c.PLANT_HEALTH, bullet_group)
         self.can_sleep = True
@@ -706,6 +717,7 @@ class ScaredyShroom(Plant):
             self.shoot_timer = self.current_time
 
 class SunShroom(Plant):
+    """ 阳光菇 """
     def __init__(self, x, y, sun_group):
         Plant.__init__(self, x, y, c.SUNSHROOM, c.PLANT_HEALTH, None)
         self.can_sleep = True
@@ -748,6 +760,7 @@ class SunShroom(Plant):
             self.sun_timer = self.current_time
 
 class IceShroom(Plant):
+    """ 冰川菇 """
     def __init__(self, x, y):
         Plant.__init__(self, x, y, c.ICESHROOM, c.PLANT_HEALTH, None)
         self.can_sleep = True
@@ -805,6 +818,7 @@ class IceShroom(Plant):
         return self.orig_pos
 
 class HypnoShroom(Plant):
+    """ 迷糊菇 """
     def __init__(self, x, y):
         Plant.__init__(self, x, y, c.HYPNOSHROOM, 1, None)
         self.can_sleep = True
@@ -826,6 +840,7 @@ class HypnoShroom(Plant):
         self.frames = self.idle_frames
 
 class WallNutBowling(Plant):
+    """ 坚果保龄球模式：坚果 """
     def __init__(self, x, y, map_y, level):
         Plant.__init__(self, x, y, c.WALLNUTBOWLING, 1, None)
         self.map_y = map_y
@@ -907,6 +922,7 @@ class WallNutBowling(Plant):
         self.rect = self.image.get_rect(center=self.init_rect.center)
 
 class RedWallNutBowling(Plant):
+    """ 坚果保龄球模式：红色爆炸坚果 """
     def __init__(self, x, y):
         Plant.__init__(self, x, y, c.REDWALLNUTBOWLING, 1, None)
         self.orig_y = y
